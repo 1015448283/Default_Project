@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getAssetUrl } from '../../utils/asset';
 
 export function Hero() {
   const [imageError, setImageError] = useState(false);
@@ -104,7 +105,7 @@ export function Hero() {
               <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-dark-800">
                 {!imageError ? (
                   <img
-                    src="/profile.jpg"
+                    src={getAssetUrl('/profile.jpg')}
                     alt="Oliver Prada"
                     onError={() => setImageError(true)}
                     className="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105"

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { serviceService } from '../../services/projectService';
 import { Card, Badge, Button, Skeleton } from '../../components/common';
+import { getAssetUrl } from '../../utils/asset';
 import { toast } from 'sonner';
 
 export default function ServicesAdmin() {
@@ -45,7 +46,7 @@ export default function ServicesAdmin() {
               <div className="flex items-center gap-4">
                 {s.imagen_url && (
                   <img
-                    src={s.imagen_url}
+                    src={getAssetUrl(s.imagen_url)}
                     alt={s.nombre}
                     className="w-16 h-16 rounded-lg object-cover border border-dark-700 shrink-0 hidden sm:block"
                   />

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { serviceService } from '../../services/projectService';
 import { Card, Button } from '../../components/common';
 import { Link } from 'react-router-dom';
+import { getAssetUrl } from '../../utils/asset';
 
 const DEFAULT_SERVICES = [
   {
@@ -96,7 +97,7 @@ export default function Services() {
                   <div className="relative w-full h-52 bg-dark-900 border-b border-dark-700/80 overflow-hidden flex items-center justify-center">
                     {s.imagen_url ? (
                       <img
-                        src={s.imagen_url}
+                        src={getAssetUrl(s.imagen_url)}
                         alt={s.nombre}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getAssetUrl } from '../../utils/asset';
 
 // ============================================================
 //  ✏️  AGREGA O EDITA TUS PROYECTOS AQUÍ
@@ -87,7 +88,7 @@ export default function Testimonials() {
               {proyecto.imagen ? (
                 <div className="w-full h-44 overflow-hidden bg-dark-900">
                   <img
-                    src={proyecto.imagen}
+                    src={getAssetUrl(proyecto.imagen)}
                     alt={`Captura de ${proyecto.nombre}`}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />

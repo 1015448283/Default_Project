@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { proyectosRealizados } from '../../pages/public/Portfolio';
+import { getAssetUrl } from '../../utils/asset';
 
 const CodeIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -39,7 +40,7 @@ function ProjectAvatar({ imagen, nombre }: { imagen?: string; nombre: string }) 
 
   return (
     <img
-      src={imagen}
+      src={getAssetUrl(imagen)}
       alt={`Logo o captura de ${nombre}`}
       onError={() => setHasError(true)}
       className="w-full h-full object-contain p-2 rounded-full group-hover:scale-110 group-hover:brightness-110 transition-all duration-300"

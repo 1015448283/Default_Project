@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getAssetUrl } from '../../utils/asset';
 
 // ============================================================
 //  ✏️  AGREGA O EDITA TUS PROYECTOS AQUÍ
@@ -85,7 +86,7 @@ function ProjectAvatar({ imagen, nombre }: { imagen?: string; nombre: string }) 
 
   return (
     <img
-      src={imagen}
+      src={getAssetUrl(imagen)}
       alt={`Logo o captura de ${nombre}`}
       onError={() => setHasError(true)}
       className="w-full h-full object-contain p-2.5 rounded-full group-hover:scale-110 group-hover:brightness-110 transition-all duration-300"
