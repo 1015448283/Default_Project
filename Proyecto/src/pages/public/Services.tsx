@@ -4,7 +4,7 @@ import { Card, Button } from '../../components/common';
 import { Link } from 'react-router-dom';
 import { getAssetUrl } from '../../utils/asset';
 
-const DEFAULT_SERVICES = [
+export const DEFAULT_SERVICES = [
   {
     id: 'default-1',
     nombre: 'Desarrollo Frontend con React & TypeScript',
@@ -56,16 +56,17 @@ const DEFAULT_SERVICES = [
 ];
 
 export default function Services() {
-  const { data: dbServices, isLoading } = useQuery({
+  const { data: services = DEFAULT_SERVICES } = useQuery({
     queryKey: ['servicios'],
     queryFn: async () => {
       const res = await serviceService.getServicios();
       if (res.error) throw res.error;
-      return res.data;
-    }
+      return res.data && res.data.length > 0 ? res.data : DEFAULT_SERVICES;
+    },
+    initialData: DEFAULT_SERVICES,
+    staleTime: 10 * 60 * 1000,
+    retry: 1,
   });
-
-  const services = dbServices && dbServices.length > 0 ? dbServices : DEFAULT_SERVICES;
 
   return (
     <div className="py-16 px-6">
@@ -79,15 +80,8 @@ export default function Services() {
           </p>
         </div>
 
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-96 bg-dark-800 border border-dark-700 rounded-2xl animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((s: any) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((s: any) => (
               <Card
                 key={s.id}
                 className="flex flex-col justify-between border border-dark-700 bg-dark-800 overflow-hidden rounded-2xl group hover:border-primary-500/50 transition-all duration-300 shadow-lg hover:shadow-primary-500/5"
@@ -154,7 +148,6 @@ export default function Services() {
               </Card>
             ))}
           </div>
-        )}
       </div>
     </div>
   );

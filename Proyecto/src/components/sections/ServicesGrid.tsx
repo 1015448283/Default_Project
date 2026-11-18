@@ -2,15 +2,19 @@ import { useQuery } from '@tanstack/react-query';
 import { serviceService } from '../../services/projectService';
 import { Card } from '../common';
 import { Link } from 'react-router-dom';
+import { DEFAULT_SERVICES } from '../../pages/public/Services';
 
 export function ServicesGrid() {
-  const { data: services, isLoading } = useQuery({
+  const { data: services = DEFAULT_SERVICES.slice(0, 3) } = useQuery({
     queryKey: ['servicios-home'],
     queryFn: async () => {
       const res = await serviceService.getServicios();
       if (res.error) throw res.error;
-      return res.data;
-    }
+      return res.data && res.data.length > 0 ? res.data.slice(0, 3) : DEFAULT_SERVICES.slice(0, 3);
+    },
+    initialData: DEFAULT_SERVICES.slice(0, 3),
+    staleTime: 10 * 60 * 1000,
+    retry: 1,
   });
 
   return (
@@ -26,14 +30,7 @@ export function ServicesGrid() {
           </Link>
         </div>
 
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-56 bg-dark-800 rounded-xl border border-dark-700 animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services?.map((s: any) => (
               <Card key={s.id} className="flex flex-col justify-between border border-dark-700 bg-dark-800 hover:border-primary-500/50 transition-all p-6">
                 <div>
@@ -51,7 +48,6 @@ export function ServicesGrid() {
               </Card>
             ))}
           </div>
-        )}
       </div>
     </section>
   );
